@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rektjpegs</title>
+  <style>
+    /* Import meme-style fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Impact&display=swap');
+    
+    :root {
+      --bg-color: #ffffff;
+      --text: #000000;
+      --accent: #000000;
+      --border: #000000;
+      --button-bg: #000000;
+      --button-text: #ffffff;
+      --button-hover: #333333;
+      --input-bg: #ffffff;
+      --input-border: #000000;
+      --checkbox-bg: #f0f0f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      font-family: 'Comic Neue', cursive;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .fade {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Banner styling */
+    .banner-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0 30px 0;
+      transform: rotate(-1deg);
+    }
+
+    .banner {
+      max-width: 300px;
+      max-height: 150px;
+      border: 4px solid #000;
+      box-shadow: 8px 8px 0 #000;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Headers and text */
+    h1 {
+      font-family: 'Impact', sans-serif;
+      font-size: 48px;
+      color: #000;
+      margin: 10px 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 4px 4px 0 #ccc;
+      transform: rotate(-2deg);
+    }
+
+    h2 {
+      font-family: 'Impact', sans-serif;
+      font-size: 32px;
+      color: #000;
+      margin: 20px 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transform: rotate(1deg);
+    }
+
+    h3 {
+      font-family: 'Impact', sans-serif;
+      font-size: 24px;
+      color: #000;
+      margin: 15px 0;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 10px 0;
+      font-weight: 700;
+    }
+
+    /* Buttons */
+    button {
+      font-family: 'Comic Neue', cursive;
+      font-size: 18px;
+      padding: 15px 30px;
+      margin: 15px 5px;
+      border-radius: 10px;
+      border: 3px solid #000;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transform: rotate(0.5deg);
+      box-shadow: 5px 5px 0 #000;
+    }
+
+    button:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-3px) rotate(0.5deg);
+      box-shadow: 8px 8px 0 #000;
+    }
+
+    button:active {
+      transform: translateY(1px) rotate(0.5deg);
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .small-button {
+      font-size: 14px;
+      padding: 8px 16px;
+      margin: 5px;
+      transform: rotate(-0.5deg);
+    }
+
+    /* Inputs */
+    input[type="text"],
+    input[type="url"] {
+      font-family: 'Comic Neue', cursive;
+      font-size: 16px;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 3px solid var(--input-border);
+      width: 100%;
+      text-align: center;
+      outline: none;
+      background-color: var(--input-bg);
+      color: var(--text);
+      font-weight: 700;
+      transform: rotate(0.5deg);
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus {
+      border-color: #000;
+      box-shadow: 5px 5px 0 #000;
+      transform: scale(1.02) rotate(0.5deg);
+    }
+
+    input::placeholder {
+      color: #666;
+      font-weight: normal;
+      opacity: 0.8;
+    }
+
+    /* Checkbox styling */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+      padding: 10px;
+      background: #f8f8f8;
+      border: 2px dashed #000;
+      border-radius: 8px;
+      transform: rotate(-0.5deg);
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      accent-color: #000;
+      transform: scale(1.2);
+    }
+
+    .checkbox-container label {
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    /* Divider */
+    .divider {
+      height: 4px;
+      background: #000;
+      margin: 20px 0;
+      transform: rotate(-0.5deg);
+    }
+
+    /* Task styling */
+    .task-item {
+      background: #f8f8f8;
+      border: 3px solid #000;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 15px 0;
+      text-align: left;
+      transform: rotate(0.5deg);
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .task-item p {
+      margin: 5px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-link {
+      color: #000;
+      text-decoration: none;
+      font-weight: 900;
+      border-bottom: 2px dashed #000;
+    }
+
+    .task-input {
+      margin-top: 10px;
+    }
+
+    /* Final screen */
+    .final-screen {
+      background: #000;
+      color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      border: 4px solid #000;
+      box-shadow: 10px 10px 0 #ccc;
+      transform: rotate(1deg);
+    }
+
+    .final-screen h3 {
+      color: #fff;
+      text-shadow: 3px 3px 0 #666;
+    }
+
+    .final-screen p {
+      color: #fff;
+    }
+
+    .invite-link {
+      background: #fff;
+      color: #000;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 14px;
+      margin: 15px 0;
+      word-break: break-all;
+      font-weight: 900;
+      border: 3px solid #fff;
+      box-shadow: 4px 4px 0 #fff;
+    }
+
+    /* Loading overlay */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .loading-content {
+      background: #000;
+      color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      border: 4px solid #000;
+      box-shadow: 8px 8px 0 #ccc;
+      transform: rotate(-1deg);
+    }
+
+    .spinner {
+      border: 4px solid #333;
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Warning messages */
+    .warning {
+      color: #000;
+      background: #fff;
+      border: 3px solid #000;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-weight: 900;
+      font-size: 14px;
+      transform: rotate(0.5deg);
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .error-message {
+      color: #000;
+      background: #fff;
+      border: 3px solid #000;
+      padding: 8px;
+      border-radius: 6px;
+      margin: 5px 0;
+      font-weight: 900;
+      font-size: 12px;
+      display: none;
+      transform: rotate(-0.5deg);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    /* Step containers */
+    .step-container {
+      background: #fff;
+      border: 4px solid #000;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px 0;
+      box-shadow: 8px 8px 0 #000;
+      transform: rotate(-0.5deg);
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+      
+      h1 {
+        font-size: 36px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+      
+      button {
+        font-size: 16px;
+        padding: 12px 24px;
+      }
+      
+      .step-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading overlay -->
+  <div class="loading hidden" id="loading">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <h3>GETTING REKT...</h3>
+      <p>HODL ON TIGHT!</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Step 1: Home -->
+    <div class="step-container fade" id="home">
+      <h1>REKTJPEGS</h1>
+      <div class="banner-container">
+        <div class="banner">
+          <img src="Rektjpegs banner.jpg" alt="REKTJPEGS BANNER">
+        </div>
+      </div>
+      <h2></h2>
+      <p></p>
+      <div class="divider"></div>
+      <button id="getStarted">GET REKT!</button>
+    </div>
+
+    <!-- Step 2: Username -->
+    <div class="step-container hidden fade" id="username">
+      <h2>ENTER YOUR DEETS</h2>
+      <div class="divider"></div>
+      
+      <p>YOUR X USERNAME (MUST START WITH @):</p>
+      <input type="text" id="x_username" placeholder="@username">
+      <div class="error-message" id="username-error">USERNAME MUST START WITH @</div>
+      
+      <p>WHO INVITED YOU? (OPTIONAL):</p>
+      <input type="text" id="invitee_username" placeholder="@invitee username">
+      <div class="error-message" id="invitee-error">INVITEE MUST START WITH @</div>
+      
+      <div class="checkbox-container">
+        <input type="checkbox" id="no_invitee">
+        <label for="no_invitee">I'M AN OG (FOUND THIS MYSELF)</label>
+      </div>
+      
+      <div class="warning" id="invitee-warning" style="display: none;">
+        ❌ INVITEE NOT FOUND! MAKE SURE THEY'RE REGISTERED
+      </div>
+      
+      <button id="save_username">CONTINUE TO TASKS</button>
+      <button class="small-button" id="backFromUsername">← BACK</button>
+    </div>
+
+    <!-- Step 3: Tasks -->
+    <div class="step-container hidden fade" id="tasks">
+      <h2>COMPLETE THESE TASKS</h2>
+      <div class="divider"></div>
+      
+      <div class="warning">⚠️ TASKS WILL BE VERIFIED - NO CHEATING! ⚠️</div>
+      
+      <div class="task-item">
+        <p>FOLLOW @REKTJPEGS AND TURN ON NOTIS
+          <a href="https://x.com/rektjpegs" target="_blank" rel="noopener noreferrer" class="task-link">GO →</a>
+        </p>
+      </div>
+      
+      <div class="task-item">
+        <p>LIKE PINNED POST
+          <a href="https://x.com/rektjpegs" target="_blank" rel="noopener noreferrer" class="task-link">GO →</a>
+        </p>
+      </div>
+      
+      <div class="task-item">
+        <p>REPOST WITH CAPTION ADDING "REKT"
+          <a href="https://x.com/rektjpegs" target="_blank" rel="noopener noreferrer" class="task-link">GO →</a>
+        </p>
+        <input type="url" id="repost_link" placeholder="PASTE YOUR REPOST LINK" class="task-input">
+        <div class="error-message" id="repost-error">ENTER A VALID X LINK</div>
+      </div>
+      
+      <div class="task-item">
+        <p>TAG 2 FRENS IN COMMENTS
+          <a href="https://x.com/rektjpegs" target="_blank" rel="noopener noreferrer" class="task-link">GO →</a>
+        </p>
+        <input type="url" id="comment_link" placeholder="PASTE YOUR COMMENT LINK" class="task-input">
+        <div class="error-message" id="comment-error">ENTER A VALID X LINK</div>
+      </div>
+      
+      <button id="done_tasks">CONTINUE TO WALLET</button>
+      <button class="small-button" id="backFromTasks">← BACK</button>
+    </div>
+
+    <!-- Step 4: Address -->
+    <div class="step-container hidden fade" id="address">
+      <h2>PASTE EVM ADDRESS</h2>
+      <div class="divider"></div>
+      
+      <p>EVM WALLET ADDRESS:</p>
+      <input type="text" id="wallet_address" placeholder="0x...">
+      <p>addresses with 0 balance will be tagged as bots</p>
+      <div class="error-message" id="address-error">INVALID EVM ADDRESS! MUST START WITH 0x AND HAVE 42 CHARACTERS</div>
+      
+      <button id="save_address">SUBMIT</button>
+      <button class="small-button" id="backFromAddress">← BACK</button>
+    </div>
+
+    <!-- Step 5: Final -->
+    <div class="final-screen hidden fade" id="final">
+      <h2>✅ YOU'RE IN!</h2>
+      <div class="divider" style="background: #fff;"></div>
+      
+      <p>YOUR ENTRY HAS BEEN RECORDED</p>
+      <p>YOUR USERNAME IS YOUR INVITE CODE</p>
+      
+      <div class="invite-link" id="inviteLink">
+        rektjpegs.meme<span id="userRef">@username</span>
+      </div>
+      
+      <p>SHARE LINK FOR HIGHER REVIEW CHANCE</p>
+      
+      
+    </div>
+  </div>
+
+  <script type="module">
+    // Firebase configuration
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getDatabase, ref, push, set, get, child } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOCRWiborW9rnlHVgUHs1ndWtFqTeDm4Q",
+      authDomain: "rektjpegs.firebaseapp.com",
+      databaseURL: "https://rektjpegs-default-rtdb.firebaseio.com",
+      projectId: "rektjpegs",
+      storageBucket: "rektjpegs.firebasestorage.app",
+      messagingSenderId: "821659977112",
+      appId: "1:821659977112:web:b56a9e20e2ec0d1b70d7ed"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // DOM elements
+    const homeDiv = document.getElementById('home');
+    const usernameDiv = document.getElementById('username');
+    const tasksDiv = document.getElementById('tasks');
+    const addressDiv = document.getElementById('address');
+    const finalDiv = document.getElementById('final');
+    const loadingDiv = document.getElementById('loading');
+    const inviteeWarning = document.getElementById('invitee-warning');
+    
+    // Error message elements
+    const usernameError = document.getElementById('username-error');
+    const inviteeError = document.getElementById('invitee-error');
+    const repostError = document.getElementById('repost-error');
+    const commentError = document.getElementById('comment-error');
+    const addressError = document.getElementById('address-error');
+    
+    // Final screen elements
+    const inviteLink = document.getElementById('inviteLink');
+    const userRefSpan = document.getElementById('userRef');
+
+    // State variables
+    let currentUser = '';
+    let inviteeUser = '';
+    let repostLink = '';
+    let commentLink = '';
+    let walletAddress = '';
+
+    // Navigation function
+    function goToStep(step) {
+      // Hide all steps
+      [homeDiv, usernameDiv, tasksDiv, addressDiv, finalDiv].forEach(div => {
+        div.classList.add('hidden');
+      });
+      
+      // Clear error messages
+      [usernameError, inviteeError, repostError, commentError, addressError].forEach(error => {
+        error.style.display = 'none';
+      });
+      inviteeWarning.style.display = 'none';
+      
+      // Show target step
+      document.getElementById(step).classList.remove('hidden');
+      
+      // Add fade animation
+      setTimeout(() => {
+        document.getElementById(step).classList.add('fade');
+      }, 10);
+    }
+
+    // Validation functions
+    function validateUsername(username) {
+      return username.startsWith('@') && username.length > 1;
+    }
+
+    function validateXLink(link) {
+      // Accept links with or without protocol
+      // Valid patterns: 
+      // - https://x.com/username/status/123456789
+      // - https://twitter.com/username/status/123456789
+      // - x.com/username/status/123456789
+      // - twitter.com/username/status/123456789
+      const xPattern = /^(https?:\/\/)?(x\.com|twitter\.com)\/\w+\/status\/\d+/i;
+      return xPattern.test(link);
+    }
+
+    function validateEVMAddress(address) {
+      const evmRegex = /^0x[a-fA-F0-9]{40}$/;
+      return evmRegex.test(address);
+    }
+
+    // Event Listeners
+
+    // Home → Username
+    document.getElementById('getStarted').addEventListener('click', () => {
+      goToStep('username');
+    });
+
+    // Back button from username to home
+    document.getElementById('backFromUsername').addEventListener('click', () => {
+      goToStep('home');
+    });
+
+    // Back button from tasks to username
+    document.getElementById('backFromTasks').addEventListener('click', () => {
+      goToStep('username');
+    });
+
+    // Back button from address to tasks
+    document.getElementById('backFromAddress').addEventListener('click', () => {
+      goToStep('tasks');
+    });
+
+    // Username → Tasks (with validation)
+    document.getElementById('save_username').addEventListener('click', async () => {
+      currentUser = document.getElementById('x_username').value.trim();
+      const noInvitee = document.getElementById('no_invitee').checked;
+      
+      // Validate current user
+      if (!currentUser) {
+        usernameError.textContent = "ENTER YOUR X USERNAME!";
+        usernameError.style.display = 'block';
+        return;
+      }
+      
+      if (!validateUsername(currentUser)) {
+        usernameError.textContent = "USERNAME MUST START WITH @ (e.g., @username)";
+        usernameError.style.display = 'block';
+        return;
+      }
+      
+      // Handle invitee
+      if (!noInvitee) {
+        inviteeUser = document.getElementById('invitee_username').value.trim();
+        
+        if (inviteeUser) {
+          // Validate invitee username format
+          if (!validateUsername(inviteeUser)) {
+            inviteeError.textContent = "INVITEE MUST START WITH @ (e.g., @inviter)";
+            inviteeError.style.display = 'block';
+            return;
+          }
+          
+          // Show loading
+          loadingDiv.classList.remove('hidden');
+          
+          try {
+            // Check if invitee exists in database
+            const dbRef = ref(db);
+            const snapshot = await get(child(dbRef, 'entries'));
+            
+            let inviteeExists = false;
+            if (snapshot.exists()) {
+              const entries = snapshot.val();
+              for (let key in entries) {
+                if (entries[key].username === inviteeUser) {
+                  inviteeExists = true;
+                  break;
+                }
+              }
+            }
+            
+            loadingDiv.classList.add('hidden');
+            
+            if (!inviteeExists) {
+              inviteeWarning.style.display = 'block';
+              return;
+            }
+            
+            inviteeWarning.style.display = 'none';
+          } catch (error) {
+            loadingDiv.classList.add('hidden');
+            console.error("Error checking invitee:", error);
+            inviteeWarning.style.display = 'block';
+            return;
+          }
+        } else {
+          // Optional field, can be empty
+          inviteeUser = '';
+        }
+      } else {
+        inviteeUser = '';
+      }
+      
+      goToStep('tasks');
+    });
+
+    // Checkbox toggles invitee input
+    document.getElementById('no_invitee').addEventListener('change', function() {
+      const inviteeInput = document.getElementById('invitee_username');
+      inviteeInput.disabled = this.checked;
+      inviteeInput.style.opacity = this.checked ? '0.5' : '1';
+      inviteeWarning.style.display = 'none';
+      inviteeError.style.display = 'none';
+      
+      if (this.checked) {
+        inviteeInput.value = '';
+      }
+    });
+
+    // Real-time username validation
+    document.getElementById('x_username').addEventListener('input', function() {
+      const username = this.value.trim();
+      if (!username) {
+        usernameError.style.display = 'none';
+      } else if (!validateUsername(username)) {
+        usernameError.textContent = "MUST START WITH @";
+        usernameError.style.display = 'block';
+      } else {
+      usernameError.style.display = 'none';
+      }
+    });
+
+    document.getElementById('invitee_username').addEventListener('input', function() {
+      const username = this.value.trim();
+      if (!username) {
+        inviteeError.style.display = 'none';
+      } else if (!validateUsername(username)) {
+        inviteeError.textContent = "MUST START WITH @";
+        inviteeError.style.display = 'block';
+      } else {
+        inviteeError.style.display = 'none';
+      }
+    });
+
+    // Real-time X link validation
+    document.getElementById('repost_link').addEventListener('input', function() {
+      const link = this.value.trim();
+      if (!link) {
+        repostError.style.display = 'none';
+      } else if (!validateXLink(link)) {
+        repostError.textContent = "ENTER A VALID X/TWITTER LINK ";
+        repostError.style.display = 'block';
+      } else {
+        repostError.style.display = 'none';
+      }
+    });
+
+    document.getElementById('comment_link').addEventListener('input', function() {
+      const link = this.value.trim();
+      if (!link) {
+        commentError.style.display = 'none';
+      } else if (!validateXLink(link)) {
+        commentError.textContent = "ENTER A VALID X/TWITTER LINK ";
+        commentError.style.display = 'block';
+      } else {
+        commentError.style.display = 'none';
+      }
+    });
+
+    // Real-time EVM address validation
+    document.getElementById('wallet_address').addEventListener('input', function() {
+      const address = this.value.trim();
+      if (!address) {
+        addressError.style.display = 'none';
+      } else if (!validateEVMAddress(address)) {
+        addressError.style.display = 'block';
+      } else {
+        addressError.style.display = 'none';
+      }
+    });
+
+    // Tasks → Address
+    document.getElementById('done_tasks').addEventListener('click', () => {
+      repostLink = document.getElementById('repost_link').value.trim();
+      commentLink = document.getElementById('comment_link').value.trim();
+      
+      if (!repostLink || !commentLink) {
+        alert("COMPLETE ALL TASKS AND PASTE BOTH LINKS!");
+        return;
+      }
+      
+      // Validate X link format
+      if (!validateXLink(repostLink)) {
+        repostError.textContent = "ENTER A VALID X/TWITTER REPOST LINK";
+        repostError.style.display = 'block';
+        return;
+      }
+      
+      if (!validateXLink(commentLink)) {
+        commentError.textContent = "ENTER A VALID X/TWITTER COMMENT LINK";
+        commentError.style.display = 'block';
+        return;
+      }
+      
+      goToStep('address');
+    });
+
+    // Address → Final (with EVM validation)
+    document.getElementById('save_address').addEventListener('click', async () => {
+      walletAddress = document.getElementById('wallet_address').value.trim();
+      
+      // EVM address validation
+      if (!validateEVMAddress(walletAddress)) {
+        addressError.style.display = 'block';
+        return;
+      }
+      
+      addressError.style.display = 'none';
+      
+      // Show loading
+      loadingDiv.classList.remove('hidden');
+      
+      try {
+        // Save to Firebase
+        const entryRef = push(ref(db, "entries"));
+        await set(entryRef, { 
+          username: currentUser,
+          invitee: inviteeUser || 'none',
+          repostLink, 
+          commentLink, 
+          walletAddress,
+          timestamp: new Date().toISOString()
+        });
+        
+        // Set up invite link
+        const userRef = encodeURIComponent(currentUser);
+        userRefSpan.textContent = currentUser;
+        inviteLink.innerHTML = `rektjpegs.meme?ref=${userRef}`;
+        
+        // Hide loading and show final
+        setTimeout(() => {
+          loadingDiv.classList.add('hidden');
+          goToStep('final');
+        }, 1500);
+        
+      } catch (error) {
+        loadingDiv.classList.add('hidden');
+        alert("ERROR SAVING: " + error.message);
+      }
+    });
+
+    // Initialize page
+    goToStep('home');
+  </script>
+</body>
+</html>
