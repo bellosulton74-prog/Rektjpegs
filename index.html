@@ -410,9 +410,7 @@
       </div>
       
       <!-- Referral notification (shown when coming from referral link) -->
-      <div class="referral-notice hidden" id="referralNotice">
-        🎉 YOU WERE INVITED BY: <span id="referrerName">@username</span> 🎉
-      </div>
+
       
       <h2>WELCOME TO THE MEMEVERSE</h2>
       <p>WHERE NFTs GO TO GET REKT AND MAKE HISTORY</p>
@@ -426,9 +424,7 @@
       <div class="divider"></div>
       
       <!-- Referral notification (shown when coming from referral link) -->
-      <div class="referral-notice hidden" id="referralNoticeStep2">
-        🎉 YOU WERE INVITED BY: <span id="referrerNameStep2">@username</span> 🎉
-      </div>
+      
       
       <p>YOUR X USERNAME (MUST START WITH @):</p>
       <input type="text" id="x_username" placeholder="@yourusername">
@@ -690,10 +686,35 @@
     });
 
     // Username → Tasks (with validation)
-    document.getElementById('save_username').addEventListener('click', async () => {
-      currentUser = document.getElementById('x_username').value.trim();
-      const noInvitee = document.getElementById('no_invitee').checked;
-      
+document.getElementById('save_username').addEventListener('click', async () => {
+  currentUser = document.getElementById('x_username').value.trim();
+  const noInvitee = document.getElementById('no_invitee').checked;
+  
+  // Validate current user
+  if (!currentUser) {
+    usernameError.textContent = "ENTER YOUR X USERNAME!";
+    usernameError.style.display = 'block';
+    return;
+  }
+  
+  if (!validateUsername(currentUser)) {
+    usernameError.textContent = "USERNAME MUST START WITH @ (e.g., @username)";
+    usernameError.style.display = 'block';
+    return;
+  }
+  
+  // Check if username already exists
+  loadingDiv.classList.remove('hidden');
+  const usernameExists = await checkUsernameExists(currentUser);
+  loadingDiv.classList.add('hidden');
+  
+  if (usernameExists) {
+    usernameError.textContent = "❌ USERNAME ALREADY REGISTERED! USE A DIFFERENT ONE";
+    usernameError.style.display = 'block';
+    return;
+  }
+  
+  // ... rest of the existing code continues ...
       // Validate current user
       if (!currentUser) {
         usernameError.textContent = "ENTER YOUR X USERNAME!";
@@ -866,7 +887,32 @@
         alert("COMPLETE ALL TASKS AND PASTE BOTH LINKS!");
         return;
       }
-      
+      // Address → Final (with EVM validation)
+document.getElementById('save_address').addEventListener('click', async () => {
+  walletAddress = document.getElementById('wallet_address').value.trim();
+  
+  // EVM address validation
+  if (!validateEVMAddress(walletAddress)) {
+    addressError.style.display = 'block';
+    return;
+  }
+  
+  addressError.style.display = 'none';
+  
+  // Show loading
+  loadingDiv.classList.remove('hidden');
+  
+  try {
+    // Final check to make sure username wasn't taken between steps
+    const usernameExists = await checkUsernameExists(currentUser);
+    if (usernameExists) {
+      loadingDiv.classList.add('hidden');
+      alert("❌ USERNAME WAS ALREADY REGISTERED WHILE YOU WERE COMPLETING TASKS! PLEASE START OVER.");
+      goToStep('username');
+      return;
+    }
+    
+    // ... rest of the existing Firebase save code ...
       // Validate X link format
       if (!validateXLink(repostLink)) {
         repostError.textContent = "ENTER A VALID X/TWITTER REPOST LINK";
@@ -894,7 +940,24 @@
       }
       
       addressError.style.display = 'none';
-      
+      async function checkUsernameExists(username) {
+  try {
+    const dbRef = ref(db);
+    const snapshot = await get(child(dbRef, 'entries'));
+    
+    if (snapshot.exists()) {
+      const entries = snapshot.val();
+      for (let key in entries) {
+        if (entries[key].username.toLowerCase() === username.toLowerCase()) {
+          return true; // Username already exists
+        }
+      }
+    }
+    return false; // Username doesn't exist
+  } catch (error) {
+    console.error("Error checking username:", error);
+    return false;
+    }
       // Show loading
       loadingDiv.classList.remove('hidden');
       
@@ -945,6 +1008,9 @@
 
     // Initialize page
     goToStep('home');
+    
+    
+    }
   </script>
 </body>
 </html>
